@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Bank.Contracts
+namespace Bank.Contracts;
+
+public sealed class MoneyRequest
 {
-    public sealed class MoneyRequest
-    {
-        [Range(0.01, double.MaxValue)]
-        public decimal Amount { get; set; }
-    }
+    [Range(0.01, double.MaxValue)] public decimal Amount { get; set; }
 }

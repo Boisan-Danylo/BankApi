@@ -1,32 +1,31 @@
 ﻿using Bank.Application.Interfaces;
 using Bank.Domain.Accounts;
 using Bank.Domain.Errors;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Bank.Application.Services
+namespace Bank.Application.Services;
+
+public sealed class AccountService(IAccountRepository repo) : IAccountService
 {
-    public sealed class AccountService(IAccountRepository repo) : IAccountService
+    public Account Create(string ownerName, decimal initialBalance, string currency = "USD")
     {
-        public Account Create(string ownerName, decimal initialBalance, string currency = "USD")
-        {
-            if (string.IsNullOrWhiteSpace(ownerName))
-                throw new ValidationException("OwnerName is required.");
-            if (initialBalance < 0)
-                throw new ValidationException("Initial balance cannot be negative.");
+        if (string.IsNullOrWhiteSpace(ownerName))
+            throw new ValidationException("OwnerName is required.");
+        if (initialBalance < 0)
+            throw new ValidationException("Initial balance cannot be negative.");
 
-            var number = Guid.NewGuid().ToString("N")[..12].ToUpperInvariant();
-            var account = new Account(number, ownerName.Trim(), currency, initialBalance); repo.Add(account);
-            return account;
-        }
+        var number = Guid.NewGuid().ToString("N")[..12].ToUpperInvariant();
+        var account = new Account(number, ownerName.Trim(), currency, initialBalance);
+        repo.Add(account);
+        return account;
+    }
 
-        public Account Get(string accountNumber) => 
-            repo.Get(accountNumber);
+    public Account Get(string accountNumber)
+    {
+        return repo.Get(accountNumber);
+    }
 
-        public IReadOnlyCollection<Account> List() =>
-            repo.List().OrderBy(a => a.AccountNumber).ToArray();
+    public IReadOnlyCollection<Account> List()
+    {
+        return repo.List().OrderBy(a => a.AccountNumber).ToArray();
     }
 }

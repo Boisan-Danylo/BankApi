@@ -1,6 +1,5 @@
 using Bank.Application.Interfaces;
 using Bank.Application.Services;
-using Bank.Domain;
 using Bank.Domain.Accounts;
 using Bank.Domain.Errors;
 using Bank.Infrastructure;
@@ -30,10 +29,10 @@ app.UseExceptionHandler(errorApp =>
         var (status, title, detail) = ex switch
         {
             ValidationException ve => (StatusCodes.Status400BadRequest, "Validation error", ve.Message),
-            NotFoundException => (StatusCodes.Status404NotFound, "Not found", ex!.Message),
-            InsufficientFundsException => (StatusCodes.Status409Conflict, "Conflict", ex!.Message),
+            NotFoundException => (StatusCodes.Status404NotFound, "Not found", ex.Message),
+            InsufficientFundsException => (StatusCodes.Status409Conflict, "Conflict", ex.Message),
             _ => (StatusCodes.Status500InternalServerError, "Internal Server Error",
-                                             app.Environment.IsDevelopment() ? ex?.Message : "Unexpected error")
+                app.Environment.IsDevelopment() ? ex?.Message : "Unexpected error")
         };
 
         var problem = new ProblemDetails
@@ -50,7 +49,7 @@ app.UseExceptionHandler(errorApp =>
     });
 });
 
-app.UseSwagger(); app.UseSwaggerUI();
+app.UseSwagger();
+app.UseSwaggerUI();
 app.MapControllers();
 app.Run();
-public partial class Program { }

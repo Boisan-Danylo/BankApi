@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Bank.Contracts
+namespace Bank.Contracts;
+
+public sealed class CreateAccountRequest
 {
-    public sealed class CreateAccountRequest
-    {
-        [Required] public string OwnerName { get; set; } = default!;
-        [Range(0, double.MaxValue)] public decimal InitialBalance { get; set; }
-        public string? Currency { get; set; } = "USD";
-    }
+    [Required] public string OwnerName { get; set; } = null!;
+    [Range(0, double.MaxValue)] public decimal InitialBalance { get; set; }
+    public string? Currency { get; set; } = "USD";
 }

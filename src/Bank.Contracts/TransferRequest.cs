@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Bank.Contracts
+namespace Bank.Contracts;
+
+public sealed class TransferRequest
 {
-    public sealed class TransferRequest
-    {
-        [Required] public string FromAccount { get; set; } = default!;
-        [Required] public string ToAccount { get; set; } = default!;
-        [Range(0.01, double.MaxValue)] public decimal Amount { get; set; }
-    }
+    [Required] public string FromAccount { get; set; } = null!;
+    [Required] public string ToAccount { get; set; } = null!;
+    [Range(0.01, double.MaxValue)] public decimal Amount { get; set; }
 }
