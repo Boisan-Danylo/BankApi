@@ -6,7 +6,7 @@ namespace Bank.Infrastructure;
 
 // CRUD Operations for storing and retrieving Account entities
 // Imitating a database repository
-// In a real-world application, this would interface with a database context
+// In a real-world application, this would be an interface with a database context
 public sealed class InMemoryAccountRepository : IAccountRepository
 {
     private readonly ConcurrentDictionary<string, Account> _store = new();
