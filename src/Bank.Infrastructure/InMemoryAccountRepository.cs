@@ -8,7 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Bank.Infrastructure
-{
+{        
+    // CRUD Operations for storing and retrieving Account entities
+    // Imitating a database repository
+    // In a real-world application, this would interface with a database context
     public sealed class InMemoryAccountRepository : IAccountRepository
     {
         private readonly ConcurrentDictionary<string, Account> _store = new();
@@ -22,6 +25,9 @@ namespace Bank.Infrastructure
         public Account Get(string number) =>
             _store.TryGetValue(number, out var acc) ? acc : throw new NotFoundException("Account not found.");
         public IReadOnlyCollection<Account> List() => _store.Values.ToArray();
-        public void Update(Account account) { /* no-op for in-memory */ }
+        public void Update(Account account) 
+        {
+            // Empty. Would be used if we have a real database
+        }
     }
 }
